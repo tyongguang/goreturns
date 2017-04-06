@@ -94,8 +94,8 @@ func processFile(pkgDir, filename string, in io.Reader, out io.Writer, stdin boo
 			Fragment:  opt.Fragment,
 			AllErrors: opt.AllErrors,
 			Comments:  true,
-			TabIndent: true,
-			TabWidth:  8,
+			TabIndent: false,
+			TabWidth:  4,
 		})
 		if err != nil {
 			return err

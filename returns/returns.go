@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"go/ast"
 	"go/build"
-	"go/format"
 	"go/parser"
 	"go/printer"
 	"go/token"
@@ -58,8 +57,11 @@ func Process(pkgDir, filename string, src []byte, opt *Options) ([]byte, error) 
 		}
 	}
 
+	printConfig := &printer.Config{Mode: printer.UseSpaces, Tabwidth: 4}
+
 	var buf bytes.Buffer
-	err = printer.Fprint(&buf, fileSet, file)
+
+	err = printConfig.Fprint(&buf, fileSet, file)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +70,7 @@ func Process(pkgDir, filename string, src []byte, opt *Options) ([]byte, error) 
 		out = adjust(src, out)
 	}
 
-	out, err = format.Source(out)
+	//out, err = format.Source(out)
 	if err != nil {
 		return nil, err
 	}
